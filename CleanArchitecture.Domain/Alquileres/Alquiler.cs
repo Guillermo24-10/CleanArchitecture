@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Domain.Abstractions;
+using CleanArchitecture.Domain.Alquileres.Events;
 using CleanArchitecture.Domain.Vehiculos;
 
 namespace CleanArchitecture.Domain.Alquileres
@@ -33,5 +34,38 @@ namespace CleanArchitecture.Domain.Alquileres
         public DateTime? FechaDenegacion { get; private set; }
         public DateTime? FechaCompletado { get; private set; }
         public DateTime? FechaCancelacion { get; private set; }
+
+        public static Alquiler Reservar(Vehiculo vehiculo, Guid userId, DateRange duracion,
+                                        DateTime fechaCreacion, PrecioService precioService)
+        {
+            var precioDetalle = precioService.CalcularPrecio(vehiculo, duracion);
+
+            var alquiler = new Alquiler(
+                        Guid.NewGuid(),
+                        vehiculo.Id,
+                        userId,
+                        precioDetalle.PrecioPorPeriodo,
+                        precioDetalle.Mantenimiento,
+                        precioDetalle.Accesorios,
+                        precioDetalle.PrecioTotal,
+                        AlquilerStatus.Reservado,
+                        duracion,
+                        fechaCreacion
+                        );
+
+            alquiler.RaiseDomainEvent(new AlquilerReservadoDomainEvent(alquiler.Id));
+
+            vehiculo.FechaUltimaAlquiler = fechaCreacion;
+
+            return alquiler;
+        }
+
+        public Result Confirmar(DateTime utcNow)
+        {
+            if (Status != AlquilerStatus.Reservado)
+            {
+                // se dispare una exception con un mensaje error
+            }
+        }
     }
 }
