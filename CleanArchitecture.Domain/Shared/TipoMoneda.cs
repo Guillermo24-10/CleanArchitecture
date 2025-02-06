@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Domain.Vehiculos
+﻿namespace CleanArchitecture.Domain.Shared
 {
     public record TipoMoneda
     {
@@ -14,7 +14,7 @@
             Eur
         };
 
-        public static TipoMoneda FromCodidgo(string codigo)
+        public static TipoMoneda FromCodigo(string codigo)
         {
             return All.FirstOrDefault(c => c.Codigo == codigo) ??
                 throw new ApplicationException("El tipo de moneda es invalido");
