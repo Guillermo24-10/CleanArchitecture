@@ -22,7 +22,7 @@ namespace CleanArchitecture.Application.Alquileres.ReservarAlquiler
 
         public async Task Handle(AlquilerReservadoDomainEvent notification, CancellationToken cancellationToken)
         {
-            var alquiler = await _alquilerRepository.GetByIDAsync(notification.AlquilerId, cancellationToken);
+            var alquiler = await _alquilerRepository.GetByIdAsync(notification.AlquilerId, cancellationToken);
             if (alquiler == null) { return; }
 
             var user = await _userRepository.GetByIdAsync(alquiler.UserId, cancellationToken);

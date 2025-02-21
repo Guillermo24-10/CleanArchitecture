@@ -7,6 +7,9 @@ namespace CleanArchitecture.Domain.Alquileres
 {
     public sealed class Alquiler : Entity
     {
+        private Alquiler()
+        {
+        }
         private Alquiler(Guid id, Guid vehiculoId, Guid userId, Moneda? precioPorPeriodo,
             Moneda? mantenimiento, Moneda? accesorios, Moneda? precioTotal, AlquilerStatus status,
             DateRange? duracion, DateTime? fechaCreacion) : base(id)

@@ -6,6 +6,9 @@ namespace CleanArchitecture.Domain.Comentarios
 {
     public sealed class Comentario : Entity
     {
+        private Comentario()
+        {
+        }
         private Comentario(Guid id, Guid vehiculoId, Guid alquilerId,
             Guid userId, Rating rating, _Comentario review, DateTime? fechaCreacion) : base(id)
         {
